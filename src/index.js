@@ -29,7 +29,7 @@ function addVirtualNodes( tree, id, value, count ) {
 }
 
 function get( tree, id ) {
-	return hash32( id )
+	return hash32( id.toString() )
 		.then( function( key ) {
 			return tree.nearest( key );
 		} )

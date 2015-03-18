@@ -72,6 +72,10 @@ describe( 'Consistent hash', function() {
 			hash.countNodes().should.equal( totalVNodes );
 		} );
 
+		it( 'should retrieve values for non-string keys', function() {
+			return hash.get( 100 ).should.eventually.equal( 4 );
+		} );
+
 		it( 'should return an even distribution of values', function() {
 			var promises = when.all( _.map( _.range( 0, reads ), function( i ) {
 				return hash.get( [ 'somethingOrOther', i ].join( '-' ) );

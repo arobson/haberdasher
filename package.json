@@ -1,6 +1,6 @@
 {
   "name": "haberdasher",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A consistent-hash ring based on murmurhash3 and redblack.js",
   "main": "src/index.js",
   "scripts": {
