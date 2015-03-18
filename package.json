@@ -1,0 +1,42 @@
+{
+  "name": "haberdasher",
+  "version": "0.1.0",
+  "description": "A consistent-hash ring based on murmurhash3 and redblack.js",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arobson/haberdasher"
+  },
+  "keywords": [
+    "consistent hash",
+    "hash",
+    "ring"
+  ],
+  "author": "Alex Robson",
+  "license": "MIT License - http://opensource.org/licenses/MIT",
+  "bugs": {
+    "url": "https://github.com/arobson/haberdasher/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "homepage": "https://github.com/arobson/haberdasher",
+  "devDependencies": {
+    "biggulp": "0.0.2",
+    "chai": "^2.1.1",
+    "chai-as-promised": "^4.3.0",
+    "chai-stats": "^0.3.0",
+    "gulp": "^3.8.11",
+    "lodash": "^3.5.0",
+    "pretty-hrtime": "^1.0.0"
+  },
+  "dependencies": {
+    "lodash": "^3.5.0",
+    "murmurhash3": "~0.3.1",
+    "redblack.js": "~0.1.0",
+    "when": "^3.7.2"
+  }
+}
