@@ -6,8 +6,6 @@ chai.use( chaiAsPromised );
 var should = chai.should();
 var hasher = require( '../src/index' );
 var _ = require( 'lodash' );
-var when = require( 'when' );
-var seq = require( 'when/sequence' );
 
 describe( 'Consistent hash', function() {
 	describe( 'with a single node', function() {
@@ -26,16 +24,13 @@ describe( 'Consistent hash', function() {
 		} );
 
 		it( 'should return the same value consistently', function() {
-			var promises = when.all( _.map( _.range( 0, 100 ), function( i ) {
+			var results = _.map( _.range( 0, 100 ), function( i ) {
 				return hash.get( [ 'somethingOrOther', i ].join( '-' ) );
-			} ) );
+			} );
 			var check = function( x ) {
 				return x === 1;
-			}
-			return promises
-				.then( function( values ) {
-					_.all( values, check ).should.be.true;
-				} );
+			};
+			_.all( results, check ).should.be.true;
 		} );
 	} );
 
@@ -44,20 +39,13 @@ describe( 'Consistent hash', function() {
 		var vnodes = 100;
 		var totalVNodes = vnodes * 4;
 		var reads = 1000;
-		var deviation = ( reads / 4 ) * .1;
+		var deviation = ( reads / 4 ) * 0.1;
 		before( function() {
 			hash = hasher( vnodes );
-			var start = process.hrtime();
-			return seq( [ function() {
-					return hash.add( 'one', 1 );
-				}, function() {
-					return hash.add( 'two', 2 );
-				}, function() {
-					return hash.add( 'three', 3 );
-				}, function() {
-					return hash.add( 'four', 4 );
-				}
-			] );
+			hash.add( 'one', 1 );
+			hash.add( 'two', 2 );
+			hash.add( 'three', 3 );
+			hash.add( 'four', 4 );
 		} );
 
 		it( 'should have correct keys', function() {
@@ -73,17 +61,14 @@ describe( 'Consistent hash', function() {
 		} );
 
 		it( 'should retrieve values for non-string keys', function() {
-			return hash.get( 100 ).should.eventually.equal( 4 );
+			return hash.get( 190 ).should.equal( 4 );
 		} );
 
 		it( 'should return an even distribution of values', function() {
-			var promises = when.all( _.map( _.range( 0, reads ), function( i ) {
+			var values = _.map( _.range( 0, reads ), function( i ) {
 				return hash.get( [ 'somethingOrOther', i ].join( '-' ) );
-			} ) );
-			return promises
-				.then( function( values ) {
-					return _.values( _.countBy( values ) );
-				} ).should.eventually.have.deviation.lessThan( deviation );
+			} );
+			_.values( _.countBy( values ) ).should.have.deviation.lessThan( deviation );
 		} );
 
 		describe( 'after removing keys', function() {
@@ -105,23 +90,17 @@ describe( 'Consistent hash', function() {
 			} );
 
 			it( 'should not return removed values', function() {
-				var promises = when.all( _.map( _.range( 0, reads ), function( i ) {
+				var values = _.map( _.range( 0, reads ), function( i ) {
 					return hash.get( [ 'somethingOrOther', i ].join( '-' ) );
-				} ) );
-				return promises
-					.then( function( values ) {
-						return _.keys( _.countBy( values ) );
-					} ).should.eventually.deep.equal( [ '2', '4' ] );
+				} );
+				_.keys( _.countBy( values ) ).should.eql( [ '2', '4' ] );
 			} );
 
 			it( 'should return an even distribution of values', function() {
-				var promises = when.all( _.map( _.range( 0, reads ), function( i ) {
+				var values = _.map( _.range( 0, reads ), function( i ) {
 					return hash.get( [ 'somethingOrOther', i ].join( '-' ) );
-				} ) );
-				return promises
-					.then( function( values ) {
-						return _.values( _.countBy( values ) );
-					} ).should.eventually.have.deviation.lessThan( ( reads / 2 ) * .1 );
+				} );
+				_.values( _.countBy( values ) ).should.have.deviation.lessThan( ( reads / 2 ) * 0.1 );
 			} );
 		} );
 	} );

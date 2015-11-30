@@ -14,7 +14,7 @@ describe( 'Boat racin\'!', function() {
 	var vnodes = 1000;
 	var totalVNodes = vnodes * 10;
 	var reads = 10000;
-	var deviation = ( reads / 10 ) * .1;
+	var deviation = ( reads / 10 ) * 0.1;
 	describe( 'with 10 nodes and ' + vnodes + ' virtual nodes each', function() {
 		var hash;
 

@@ -1,6 +1,6 @@
 {
   "name": "haberdasher",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A consistent-hash ring based on murmurhash3 and redblack.js",
   "main": "src/index.js",
   "scripts": {
@@ -34,8 +34,8 @@
     "pretty-hrtime": "^1.0.0"
   },
   "dependencies": {
+    "farmhash": "~1.1.0",
     "lodash": "^3.5.0",
-    "murmurhash3": "~0.3.1",
     "redblack.js": "~0.1.0",
     "when": "^3.7.2"
   }

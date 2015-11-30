@@ -1,38 +1,28 @@
 var rb = require( 'redblack.js' );
-var murmurhash = require( 'murmurhash3' );
-var lift = require( 'when/node' ).lift;
-var hash32 = lift( murmurhash.murmur32 );
-var when = require( 'when' );
+var hash32 = require( 'farmhash' ).hash32;
 var _ = require( 'lodash' );
 
 function addNode( state, tree, count, id, value ) {
-	return addVirtualNodes( tree, id, value, count )
-		.then( function( keys ) {
-			state.keys[ id ] = keys;
-			return keys;
-		} );
+	var keys = addVirtualNodes( tree, id, value, count );
+	state.keys[ id ] = keys;
+	return keys;
 }
 
 function addVirtualNodes( tree, id, value, count ) {
 	var list = [];
 	var range = _.range( 0, count );
-	var promises = _.map( range, function( i ) {
+	return _.map( range, function( i ) {
 		var key = [ id, i ].join( ':' );
-		return hash32( key )
-			.then( function( hashed ) {
-				tree.add( hashed, value );
-				list.push( hashed );
-				return hashed;
-			} );
+		var hash = hash32( key );
+		tree.add( hash, value );
+		list.push( hash );
+		return hash;
 	} );
-	return when.all( promises );
 }
 
 function get( tree, id ) {
-	return hash32( id.toString() )
-		.then( function( key ) {
-			return tree.nearest( key );
-		} )
+	var hash = hash32( id.toString() );
+	return tree.nearest( hash );
 }
 
 function removeNode( state, tree, id ) {
@@ -66,5 +56,5 @@ module.exports = function( virtualNodes ) {
 			tree.root.log();
 		},
 		remove: removeNode.bind( undefined, state, tree )
-	}
+	};
 };
