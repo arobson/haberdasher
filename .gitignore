@@ -7,3 +7,6 @@ log/
 *.swo
 coverage/
 plato/
+dist/
+*.tsbuildinfo
+.vitest/

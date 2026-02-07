@@ -1,63 +1,60 @@
 {
-  "name": "haberdasher",
-  "version": "1.0.0",
-  "description": "A consistent-hash ring based on farmhash and redblack.js",
-  "main": "src/index.js",
-  "scripts": {
-    "lint": "semistandard",
-    "lint-fix": "semistandard --fix",
-    "pretest": "semistandard",
-    "test": "./node_modules/mocha/bin/mocha spec/**/*.spec.js",
-    "coverage": "nyc npm test",
-    "release": "standard-version"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/arobson/haberdasher"
-  },
-  "keywords": [
-    "consistent hash",
-    "hash",
-    "ring"
-  ],
-  "author": "Alex Robson",
-  "license": "MIT License - http://opensource.org/licenses/MIT",
-  "bugs": {
-    "url": "https://github.com/arobson/haberdasher/issues"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
-  "homepage": "https://github.com/arobson/haberdasher",
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "chai-as-promised": "^7.1.1",
-    "chai-stats": "^0.3.0",
-    "coveralls": "^3.0.1",
-    "lodash": "^4.17.10",
-    "mocha": "^5.1.1",
-    "mocha-lcov-reporter": "^1.3.0",
-    "nyc": "^11.7.3",
-    "pretty-hrtime": "^1.0.0",
-    "semistandard": "^12.0.1",
-    "standard-version": "^4.3.0",
-    "when": "^3.7.8"
-  },
-  "dependencies": {
-    "farmhash": "~2.1.0",
-    "redblack.js": "~0.1.0"
-  },
-  "semistandard": {
-    "env": [
-      "mocha"
-    ],
-    "globals": [
-      "sinon",
-      "should",
-      "expect",
-      "_",
-      "seq",
-      "prettyTime"
-    ]
-  }
+	"name": "haberdasher",
+	"version": "2.0.0",
+	"description": "A consistent-hash ring based on farmhash and redblack.js",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"engines": {
+		"node": ">=22.0.0"
+	},
+	"scripts": {
+		"build": "tsc --project tsconfig.build.json",
+		"clean": "rm -rf dist coverage .vitest",
+		"lint": "eslint .",
+		"lint-fix": "eslint . --fix",
+		"test": "vitest run",
+		"coverage": "vitest run --coverage",
+		"release": "standard-version"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/arobson/haberdasher"
+	},
+	"keywords": [
+		"consistent hash",
+		"hash",
+		"ring",
+		"typescript",
+		"esm"
+	],
+	"author": "Alex Robson",
+	"license": "MIT License - http://opensource.org/licenses/MIT",
+	"bugs": {
+		"url": "https://github.com/arobson/haberdasher/issues"
+	},
+	"publishConfig": {
+		"registry": "https://registry.npmjs.org/"
+	},
+	"homepage": "https://github.com/arobson/haberdasher",
+	"devDependencies": {
+		"@eslint/js": "^9.0.0",
+		"@types/node": "^22.0.0",
+		"@vitest/coverage-v8": "^2.0.0",
+		"eslint": "^9.0.0",
+		"standard-version": "^4.3.0",
+		"typescript": "^5.6.0",
+		"typescript-eslint": "^8.0.0",
+		"vitest": "^2.0.0"
+	},
+	"dependencies": {
+		"farmhash": "^3.3.1",
+		"redblack.js": "^1.0.0"
+	}
 }

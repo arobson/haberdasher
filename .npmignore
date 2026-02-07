@@ -1,7 +1,6 @@
-demo/
-tmp/
-node_modules/
-log/
-spec/
-plato/
-coverage/
+*
+!dist/**
+!package.json
+!README.md
+!LICENSE
+!CHANGELOG.md
